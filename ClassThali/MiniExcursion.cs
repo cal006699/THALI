@@ -54,7 +54,7 @@ namespace ClassThali
         /// <param name="uneDuree">duree de l'etape à ajouter</param>
         public void AjouteEtape(string uneDescription, int uneDuree)
         {
-            Etape lEtape = new Etape(1, uneDescription, uneDuree);
+            Etape lEtape = new Etape(this.lesEtapes.Count+1, uneDescription, uneDuree);
             this.lesEtapes.Add(lEtape);
         }
 
@@ -65,7 +65,13 @@ namespace ClassThali
         /// <returns></returns>
         public int DonneDureePrevue()
         {
-            return 0;
+            int duree = 0;
+            for (int i = 0; i < this.lesEtapes.Count; i++)
+            {
+                duree = duree + this.lesEtapes[i].getDureePrevue() ;
+            };
+
+            return duree;
         }
 
         /// <summary>
@@ -75,9 +81,16 @@ namespace ClassThali
         public string DonneDureePrevuehhmm()
         {
             int dureeMin = this.DonneDureePrevue();
-            int mm = dureeMin / 60;
-            int hh = dureeMin % 60;
-            return hh.ToString("00") + ":" + mm.ToString("00");
+            int h = 0;
+            int mm = 0;
+            while (dureeMin >= 60)
+            {
+                h = h + dureeMin / 60;
+                mm = dureeMin - 60;
+                dureeMin = dureeMin - 60;
+            }
+         
+            return h.ToString("00") + ":" + mm.ToString("00");
         }
 
 
